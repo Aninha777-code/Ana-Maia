@@ -1,25 +1,433 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>anamaia1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartCash Quest</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
+color:white;
+padding:25px;
+}
+
+.container{
+max-width:1250px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+font-size:42px;
+margin-bottom:8px;
+}
+
+.sub{
+text-align:center;
+opacity:0.8;
+margin-bottom:30px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:16px;
+box-shadow:0 8px 20px rgba(0,0,0,.25);
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:18px;
+margin-bottom:20px;
+}
+
+.valor{
+font-size:28px;
+font-weight:bold;
+margin-top:10px;
+}
+
+.green{color:#22c55e;}
+.red{color:#ef4444;}
+.blue{color:#38bdf8;}
+.gold{color:#facc15;}
+
+input,select,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+}
+
+input,select{
+background:#334155;
+color:white;
+}
+
+button{
+background:#22c55e;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.xp-bar{
+background:#334155;
+height:20px;
+border-radius:10px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.xp-fill{
+height:100%;
+width:0%;
+background:#22c55e;
+transition:.3s;
+}
+
+.badge{
+background:#334155;
+padding:10px;
+border-radius:10px;
+margin-top:10px;
+opacity:.45;
+}
+
+.badge.ativo{
+opacity:1;
+box-shadow:0 0 12px rgba(34,197,94,.4);
+}
+
+.missao{
+background:#334155;
+padding:12px;
+border-radius:10px;
+margin-top:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th,td{
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#334155;
+}
+
+tr:nth-child(even){
+background:#273449;
+}
+
+.dica{
+background:#0f172a;
+padding:12px;
+border-left:4px solid #22c55e;
+border-radius:8px;
+margin-top:10px;
+font-size:14px;
+}
+
+@media(max-width:950px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+</style>
 </head>
+
 <body>
-    
 
+<div class="container">
 
-    <h2>HTML Forms</h2>
+<h1>💰⚔️ SmartCash Quest</h1>
+<div class="sub">Guarde dinheiro, evolua no jogo e aprenda investimentos</div>
 
-<form action="/action_page.php">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
-</form> 
+<div class="grid">
 
-<p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+<!-- ESQUERDA -->
+<div>
+
+<div class="card">
+<h2 id="name">Guardião da Reserva</h2>
+<p>Nível: <span id="level">1</span></p>
+
+<div class="xp-bar">
+<div class="xp-fill" id="xpFill"></div>
+</div>
+
+<p><span id="xp">0</span> / <span id="xpMax">100</span> XP</p>
+
+<div class="dica">
+Quanto mais você economiza, mais XP ganha.
+</div>
+</div>
+
+<div class="card">
+<h2>🎯 Missões Financeiras</h2>
+<div id="missions"></div>
+</div>
+
+<div class="card">
+<h2>🏆 Conquistas</h2>
+
+<div class="badge" id="c1">💰 Guardou os primeiros R$100</div>
+<div class="badge" id="c2">📈 Reserva acima de R$500</div>
+<div class="badge" id="c3">👑 Nível 5 alcançado</div>
+<div class="badge" id="c4">🏦 Primeiro investimento</div>
+
+</div>
+
+<div class="card">
+<h2>📚 Dicas de Investimento</h2>
+
+<div class="dica">💡 Reserva de emergência: guardar de 3 a 6 meses de gastos.</div>
+<div class="dica">💡 Tesouro Selic costuma ser usado por iniciantes para liquidez e segurança.</div>
+<div class="dica">💡 [CDB](chatgpt://generic-entity?number=0) pode render mais que poupança dependendo do banco.</div>
+<div class="dica">💡 Diversificar reduz riscos.</div>
+
+</div>
+
+</div>
+
+<!-- DIREITA -->
+<div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Entradas</h3>
+<div class="valor green" id="entradas">R$ 0</div>
+</div>
+
+<div class="card">
+<h3>Gastos</h3>
+<div class="valor red" id="saidas">R$ 0</div>
+</div>
+
+<div class="card">
+<h3>Guardado</h3>
+<div class="valor blue" id="saldo">R$ 0</div>
+</div>
+
+<div class="card">
+<h3>Investido</h3>
+<div class="valor gold" id="investido">R$ 0</div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>➕ Registrar Movimento</h2>
+
+<select id="tipo">
+<option value="entrada">Entrada</option>
+<option value="saida">Gasto</option>
+<option value="guardar">Guardar Dinheiro</option>
+<option value="investir">Investir</option>
+</select>
+
+<input type="text" id="descricao" placeholder="Descrição">
+<input type="number" id="valor" placeholder="Valor">
+
+<button onclick="adicionar()">Salvar</button>
+</div>
+
+<div class="card">
+<h2>📊 Gráfico</h2>
+<canvas id="grafico"></canvas>
+</div>
+
+<div class="card">
+<h2>📋 Histórico</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Valor</th>
+</tr>
+</thead>
+
+<tbody id="lista"></tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+let entradas = 0;
+let saidas = 0;
+let guardado = 0;
+let investido = 0;
+
+const player = {
+level:1,
+xp:0,
+xpMax:100
+};
+
+const missions = [
+{title:"Guardar R$50",xp:20},
+{title:"Investir pela primeira vez",xp:35},
+{title:"Chegar em R$500 guardados",xp:40}
+];
+
+function renderPlayer(){
+document.getElementById("level").innerText = player.level;
+document.getElementById("xp").innerText = player.xp;
+document.getElementById("xpMax").innerText = player.xpMax;
+
+let p = (player.xp/player.xpMax)*100;
+document.getElementById("xpFill").style.width = p + "%";
+}
+
+function ganharXP(valor){
+player.xp += valor;
+
+if(player.xp >= player.xpMax){
+player.xp -= player.xpMax;
+player.level++;
+player.xpMax = Math.floor(player.xpMax*1.2);
+alert("LEVEL UP 🔥");
+}
+
+if(player.level >= 5){
+document.getElementById("c3").classList.add("ativo");
+}
+
+renderPlayer();
+}
+
+function renderMissions(){
+let box = document.getElementById("missions");
+box.innerHTML = "";
+
+missions.forEach((m,i)=>{
+box.innerHTML += `
+<div class="missao">
+<p>${m.title} (+${m.xp} XP)</p>
+<button onclick="ganharXP(${m.xp})">Concluir</button>
+</div>
+`;
+});
+}
+
+const ctx = document.getElementById("grafico");
+
+const grafico = new Chart(ctx,{
+type:"doughnut",
+data:{
+labels:["Entradas","Gastos","Guardado","Investido"],
+datasets:[{
+data:[0,0,0,0],
+backgroundColor:["#22c55e","#ef4444","#38bdf8","#facc15"]
+}]
+}
+});
+
+function adicionar(){
+
+let tipo = document.getElementById("tipo").value;
+let descricao = document.getElementById("descricao").value;
+let valor = parseFloat(document.getElementById("valor").value);
+
+if(descricao=="" || isNaN(valor)){
+alert("Preencha tudo");
+return;
+}
+
+let emoji = "";
+
+if(tipo=="entrada"){
+entradas += valor;
+emoji="💵";
+ganharXP(10);
+}
+
+if(tipo=="saida"){
+saidas += valor;
+emoji="💸";
+}
+
+if(tipo=="guardar"){
+guardado += valor;
+emoji="🏦";
+ganharXP(20);
+
+if(guardado >= 100){
+document.getElementById("c1").classList.add("ativo");
+}
+if(guardado >= 500){
+document.getElementById("c2").classList.add("ativo");
+}
+}
+
+if(tipo=="investir"){
+investido += valor;
+emoji="📈";
+ganharXP(30);
+document.getElementById("c4").classList.add("ativo");
+}
+
+document.getElementById("entradas").innerText = "R$ " + entradas.toFixed(2);
+document.getElementById("saidas").innerText = "R$ " + saidas.toFixed(2);
+document.getElementById("saldo").innerText = "R$ " + guardado.toFixed(2);
+document.getElementById("investido").innerText = "R$ " + investido.toFixed(2);
+
+document.getElementById("lista").innerHTML += `
+<tr>
+<td>${emoji}</td>
+<td>${descricao}</td>
+<td>R$ ${valor.toFixed(2)}</td>
+</tr>
+`;
+
+grafico.data.datasets[0].data = [entradas,saidas,guardado,investido];
+grafico.update();
+
+document.getElementById("descricao").value="";
+document.getElementById("valor").value="";
+}
+
+renderPlayer();
+renderMissions();
+</script>
 
 </body>
 </html>
